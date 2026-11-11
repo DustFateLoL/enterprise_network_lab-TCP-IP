@@ -20,3 +20,68 @@ no sh
 
 end
 wr
+
+
+interface FastEthernet0/0
+description LAN-Biuro
+ip address 192.168.10.1 255.255.255.192
+ip helper-address 192.168.10.130
+ip nat inside
+duplex auto
+speed auto
+
+interface FastEthernet1/0
+description LAN-IT
+ip address 192.168.10.65 255.255.255.224
+ip helper-address 192.168.10.130
+ip nat inside
+duplex auto
+speed auto
+
+interface FastEthernet2/0
+description WLAN-Goscie
+ip address 192.168.10.97 255.255.255.224
+ip helper-address 192.168.10.130
+ip nat inside
+duplex auto
+speed auto
+
+interface FastEthernet3/0
+description LAN-DMZ
+ip address 192.168.10.129 255.255.255.240
+ip nat inside
+duplex auto
+speed auto
+
+interface FastEthernet4/0
+description WAN-Internet
+ip address 203.0.113.1 255.255.255.252
+ip nat outside
+duplex auto
+speed auto
+
+interface Ethernet5/0
+no ip address
+duplex auto
+speed auto
+shutdown
+
+interface FastEthernet6/0
+no ip address
+duplex auto
+speed auto
+shutdown
+
+ip nat inside source list 1 interface FastEthernet4/0 overload
+ip classless
+ip flow-export version 9
+access-list 1 permit 192.168.10.0 0.0.0.255
+
+line con 0
+
+line aux 0
+
+line vty 0 4
+login
+
+end
